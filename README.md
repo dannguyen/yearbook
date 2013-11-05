@@ -1,0 +1,1 @@
+A wrapper around [ruby-opencv](https://github.com/ruby-opencv/ruby-opencv) and [rmagick](http://rmagick.rubyforge.org/) (which themselves are wrappers around [OpenCV](http://opencv.org/) and [ImageMagick](http://www.imagemagick.org) + [GraphicsMagick](http://www.graphicsmagick.org/)) for producing face-cropped images from a source image.
