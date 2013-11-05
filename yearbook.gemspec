@@ -40,7 +40,8 @@ Gem::Specification.new do |s|
     "spec/fixtures/images/tyler-john.jpg",
     "spec/fixtures/images/washington-george.jpg",
     "spec/spec_helper.rb",
-    "spec/yearbook_spec.rb"
+    "spec/yearbook_spec.rb",
+    "yearbook.gemspec"
   ]
   s.homepage = "http://github.com/dannguyen/yearbook"
   s.licenses = ["MIT"]
