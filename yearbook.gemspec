@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "yearbook"
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["dannguyen"]
-  s.date = "2013-11-05"
+  s.date = "2013-11-06"
   s.description = "Easy face-cropping"
   s.email = "dansonguyen@gmail.com"
   s.extra_rdoc_files = [
@@ -32,6 +32,8 @@ Gem::Specification.new do |s|
     "data/classifiers/shameem_haarcascade_eye.xml",
     "go.rb",
     "lib/yearbook.rb",
+    "lib/yearbook/att_hash.rb",
+    "lib/yearbook/classifier.rb",
     "lib/yearbook/image.rb",
     "spec/fixtures/images/bush-george-w.jpg",
     "spec/fixtures/images/obama-barack.jpg",
