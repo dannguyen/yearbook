@@ -22,6 +22,8 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Easy face-cropping}
   gem.email = "dansonguyen@gmail.com"
   gem.authors = ["dannguyen"]
+  gem.files.exclude 'spec' # exclude temporary directory
+
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
