@@ -16,35 +16,8 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md"
   ]
-  s.files = [
-    ".document",
-    ".rspec",
-    "Gemfile",
-    "Gemfile.lock",
-    "LICENSE.txt",
-    "README.md",
-    "Rakefile",
-    "VERSION",
-    "data/classifiers/eye-left-ojoI.xml",
-    "data/classifiers/frontalEyes35x16.xml",
-    "data/classifiers/haarcascade_frontalface_alt.xml",
-    "data/classifiers/haarcascade_frontalface_default.xml",
-    "data/classifiers/shameem_haarcascade_eye.xml",
-    "go.rb",
-    "lib/yearbook.rb",
-    "lib/yearbook/att_hash.rb",
-    "lib/yearbook/classifier.rb",
-    "lib/yearbook/image.rb",
-    "spec/fixtures/images/bush-george-w.jpg",
-    "spec/fixtures/images/obama-barack.jpg",
-    "spec/fixtures/images/roosevelt-teddy.jpg",
-    "spec/fixtures/images/stuart-gilbert.jpg",
-    "spec/fixtures/images/tyler-john.jpg",
-    "spec/fixtures/images/washington-george.jpg",
-    "spec/spec_helper.rb",
-    "spec/yearbook_spec.rb",
-    "yearbook.gemspec"
-  ]
+  s.files = Dir["{data,lib}/**/*", "VERSION", "Rakefile", "README"]
+
   s.homepage = "http://github.com/dannguyen/yearbook"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
