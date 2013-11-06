@@ -1,62 +1,96 @@
 require 'rmagick'
 require 'hashie'
+require_relative 'att_hash'
+require_relative 'classifier'
 
-
-
-require 'delegate'
-class AttHash < SimpleDelegator
-
-  def initialize
-    @hsh = {}
-    super(@hsh)
-  end
-
-  def method_missing(foo, *args, &blk)
-    if @hsh.respond_to?(foo)
-      @hsh.send(foo, *args, &blk)
-    else
-     @hsh[foo.to_sym] = args
-    end
-  end
-end
 
 
 
 module Yearbook
   class Image
 
+    attr_reader :filename
     def initialize(fname)
-      @magick_image = read_magick_image(fname)
+      @filename = fname
+      @objects = []
     end
 
 
-    def write(out_fname, &blk)
+    def detect_objects(obj_type)
+      @objects = Classifier.detect_objects(cv_object, obj_type).to_a
+    end
+
+    def detect_faces
+      detect_objects(:faces)
+    end
+
+    def detected_objects
+      @objects
+    end
+
+    def write(base_out_fname, &blk)
       klass = self.class
-      image_out = image_object
 
-      if block_given?
-        h = AttHash.new
-        yield h
-
-        
-        image_out = h.inject(image_out) do |img, (foo, args)|
-          klass.send(foo, img, *args)
-        end
+      if @objects.empty?        
+        img_objects = Array(image_object)
+      else
+        img_objects = @objects.map{|o| constitute_from_cv(o, image_object)}
       end
 
-      klass.output(image_out, out_fname)        
+      img_objects.each_with_index do |image_out, idx|
+        if block_given?
+          h = AttHash.new
+          yield h
+
+          # transform the image
+          image_out = h.inject(image_out) do |img, (foo, args)|
+            klass.send(foo, img, *args)
+          end
+        end
+
+        if idx == 0
+          out_fname = base_out_fname
+        else
+          out_fname = base_out_fname.sub(/\.(?=\w+$)/, "-#{idx}.")
+        end
+
+        klass.output(image_out, out_fname)
+      end        
     end
+
+
+
 
 
     private
-    def read_magick_image(fname)
+
+
+    # defer loading until it is needed
+    def image_object
+      @magick_image ||= load_magick_image(@filename)
+    end
+
+    def cv_object
+      @cv_image ||= load_cv_image(@filename)
+    end
+
+
+
+    def constitute_from_cv(c, img)
+      pixels = img.dispatch(c.x, c.y, c.width, c.height, "RGB")
+
+      return Magick::Image.constitute(c.width, c.height, "RGB", pixels)
+    end
+
+
+    def load_magick_image(fname)
        Magick::Image::read(fname).first
     end
 
-    def image_object
-      @magick_image
-    end
 
+    def load_cv_image(fname)
+      IplImage::load(fname)
+    end
 
 
     # Image manipulation methods at the class level

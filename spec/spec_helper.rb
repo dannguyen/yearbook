@@ -9,6 +9,10 @@ require 'yearbook'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 
+IMAGE_DIR ||= File.expand_path '../spec/fixtures/images', '__FILE__'
+
+
+
 RSpec.configure do |config|
 
   config.filter_run_excluding skip: true 
