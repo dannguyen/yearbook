@@ -17,12 +17,13 @@ module Yearbook
 
 
     def detect_objects(obj_type)
-      @objects = Classifier.detect_objects(cv_object, obj_type).to_a
+      @objects = self.class.detect_objects(obj_type)
     end
 
     def detect_faces
       detect_objects(:faces)
     end
+
 
     def detected_objects
       @objects
@@ -98,6 +99,19 @@ module Yearbook
     class << self 
       def bw(img, num_colors = 128)
         img.quantize(num_colors, Magick::GRAYColorspace)
+      end
+
+      def detect_objects(img, obj_type)
+       Classifier.detect_objects(cv_object, obj_type).to_a
+      end
+
+      def detect_faces(img)
+
+      end
+
+      # just gets the main face
+      def detect_face(img)
+
       end
 
       def resize_to_fit(img, w, h = nil)

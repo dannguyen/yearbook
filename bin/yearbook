@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require './lib/yearbook'
+
+begin
+  Yearbook::CLI.start(ARGV)
+end

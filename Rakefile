@@ -1,5 +1,6 @@
 # encoding: utf-8
-$:.unshift File.dirname(File.expand_path './lib', __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rubygems'
 require 'bundler'
@@ -23,6 +24,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "dansonguyen@gmail.com"
   gem.authors = ["dannguyen"]
   gem.files.exclude 'spec/fixtures/images/*.jpg' # exclude temporary directory
+  gem.executables << 'yearbook'
 
   # dependencies defined in Gemfile
 end
@@ -36,7 +38,6 @@ end
 
 RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
 end
 
 task :default => :spec
