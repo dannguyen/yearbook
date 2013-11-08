@@ -51,9 +51,42 @@ module Yearbook
       end
 
 
+      context 'croppping to detection' do 
+        it 'should allow close cropping'
+        it 'should take in percentages and weights'
+
+        # crop_to_object -10, -20
+
+      end
+
+      context 'detection' do
+        before(:each) do
+          @image.detect_face
+        end
+
+        it 'should' do 
+          pending 'what'
+          @image.detected? # to eq true
+          @image.detected_objects # to be an array
+          @image.detected_object # to eq CV thingy
+
+          # API:
+          img = @image.new(@fname) 
+          img.detect_face 
+          img.write do |f|
+# etc          do |f|
+            f.detect_face  # -d face
+            f.bw  # --bw
+            f.resize_to_fill(100, 200)  # --fill 100,200
+            f.write(whatev)
+          end
+
+# yearbook photo.jpg face.jpg --detect face 
+
+        end
+
+      end
 
     end
-
-
   end
 end
