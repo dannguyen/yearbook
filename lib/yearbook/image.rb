@@ -1,4 +1,4 @@
-require_relative 'att_hash'
+require_relative 'command_mash'
 require_relative 'manipulator'
 require_relative 'detector'
 
@@ -16,9 +16,6 @@ module Yearbook
     def clip(obj_type, *args, &blk)
       @clips = detect_and_collect(cv_image, obj_type)
     end
-
-
-
 
     def clipped?; @clips.count > 0; end
 
@@ -113,7 +110,7 @@ module Yearbook
     def transform_image(obj, &blk)
       transformed_obj = obj
       if block_given?
-        method_queue = AttHash.new
+        method_queue = CommandMash.new
         yield method_queue
 
         # transform the image
@@ -143,8 +140,6 @@ module Yearbook
     def write_image(img, out_fname)
       img.write(out_fname)
     end
-
-
 
   end
 end

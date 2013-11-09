@@ -1,4 +1,5 @@
 require 'delegate'
+require 'pry'
 
 module Yearbook
   module Detection
@@ -11,9 +12,12 @@ module Yearbook
 
       # returns just one of the CvAvgComps
       def best
-        sort_by{|c| c.width * c.height}.reverse.first
+        arr = sort_by{|c| (c.width * c.height * 0.1) + c.neighbors * 10  }.reverse
+
+        return arr.first
       end
     
+
 
     end
   end

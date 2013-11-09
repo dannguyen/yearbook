@@ -6,7 +6,6 @@ module Yearbook
     DATA_DIR = File.expand_path('../../../data/classifiers', __FILE__ )
     DATA_FILES = {
       faces: File.join(DATA_DIR, 'haarcascade_frontalface_default.xml')
-
     }
 
     attr_reader :filename

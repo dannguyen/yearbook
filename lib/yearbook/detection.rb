@@ -1,8 +1,7 @@
 require_relative 'detection/collection'
 
 module Yearbook
-  module Detection
-  end
+  module Detection; end
 
   class << self
     def DetectionCollection(cvseq, obj_type = nil)

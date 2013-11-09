@@ -103,8 +103,6 @@ module Yearbook
             pixel_count = best_face.width * best_face.height
             magick_image = Manipulator.load_magick(@tempfile.path)
 
-
-binding.pry
             expect(pixel_count).to eq magick_image.columns * magick_image.rows
           end
 
