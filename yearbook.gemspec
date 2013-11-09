@@ -5,13 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = "yearbook"
-  s.version = "0.2.3"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["dannguyen"]
-  s.date = "2013-11-07"
+  s.date = "2013-11-09"
   s.description = "Easy face-cropping"
   s.email = "dansonguyen@gmail.com"
+  s.executables = ["yearbook", "yearbook"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
@@ -25,6 +26,7 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "bin/yearbook",
     "data/classifiers/eye-left-ojoI.xml",
     "data/classifiers/frontalEyes35x16.xml",
     "data/classifiers/haarcascade_frontalface_alt.xml",
@@ -34,7 +36,13 @@ Gem::Specification.new do |s|
     "lib/yearbook.rb",
     "lib/yearbook/att_hash.rb",
     "lib/yearbook/classifier.rb",
+    "lib/yearbook/cli.rb",
+    "lib/yearbook/detected_object.rb",
+    "lib/yearbook/detection.rb",
+    "lib/yearbook/detection/collection.rb",
+    "lib/yearbook/detector.rb",
     "lib/yearbook/image.rb",
+    "lib/yearbook/manipulator.rb",
     "spec/spec_helper.rb",
     "spec/yearbook_spec.rb",
     "yearbook.gemspec"
