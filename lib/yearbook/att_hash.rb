@@ -1,4 +1,6 @@
 require 'delegate'
+require 'hashie'
+
 class AttHash < SimpleDelegator
   def initialize
     @hsh = {}

@@ -27,9 +27,9 @@ module Yearbook
         end
       end
 
-      describe '#write' do
+      describe '#print' do
         it 'should write to disk' do 
-          @image.write(@tempfile.path)
+          @image.print(@tempfile.path)
           expect(@tempfile.size > 10000).to be_true
         end
 
@@ -38,12 +38,12 @@ module Yearbook
             @image.detect_faces
           end
 
-          it 'should write each object to disk' do 
+          it 'should print each object to disk' do 
             last_num = @image.detected_objects.count - 1
             path = @tempfile.path
             last_path = path.sub(/\.(?=\w+$)/, "-#{last_num}.")
 
-            @image.write(path)
+            @image.print(path)
             expect(File.exists?(last_path)).to be_true
           end
 
@@ -59,32 +59,32 @@ module Yearbook
 
       end
 
+
       context 'detection' do
         before(:each) do
-          @image.detect_face
+          @image.detect_faces
         end
 
         it 'should' do 
           pending 'what'
           @image.detected? # to eq true
           @image.detected_objects # to be an array
-          @image.detected_object # to eq CV thingy
+          @image.detected_objects # to eq CV thingy
 
-          # API:
-          img = @image.new(@fname) 
-          img.detect_face 
-          img.write do |f|
-# etc          do |f|
-            f.detect_face  # -d face
-            f.bw  # --bw
-            f.resize_to_fill(100, 200)  # --fill 100,200
-            f.write(whatev)
-          end
+#           # API:
+#           img = @image.new(@fname) 
+#           img.detect_face 
+#           img.write do |f|
+# # etc          do |f|
+#             f.detect_face  # -d face
+#             f.bw  # --bw
+#             f.resize_to_fill(100, 200)  # --fill 100,200
+#             f.write(whatev)
+#           end
 
 # yearbook photo.jpg face.jpg --detect face 
 
         end
-
       end
 
     end

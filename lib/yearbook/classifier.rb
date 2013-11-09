@@ -1,5 +1,5 @@
 module Yearbook
-  module Classifier
+  class Classifier
     
     DATA_DIR = File.expand_path('../../../data/classifiers', __FILE__ )
     DATA_FILES = {
@@ -7,20 +7,30 @@ module Yearbook
 
     }
 
+    attr_reader :filename
 
-    # returns an array of detected objects
-    def self.detect_objects(cv_image, object_type)
-      detector = load_detector(object_type.to_sym)
+    def initialize(fname)
+      @filename = fname
 
-      detector.detect_objects(cv_image)
+      @classifier =  load_classifier(@filename)
+    end
+
+    def detect_objects(cvimg)
+      @classifier.detect_objects(cvimg)
     end
 
 
-    def self.load_detector(object_type)
-      fname = DATA_FILES[object_type]
-      puts fname
-      OpenCV::CvHaarClassifierCascade::load( fname )
+
+
+    # convenience
+    def self.of(object_type)
+      self.new DATA_FILES[object_type.to_sym]
     end
 
+
+    private
+    def load_classifier(fname)
+      OpenCV::CvHaarClassifierCascade::load(fname )
+    end
   end
 end
