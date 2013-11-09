@@ -18,13 +18,13 @@ Then:
 
 ### In Ruby
 
-  require 'yearbook'
-  
-  image = Yearbook::Image.new('path/to/somebody.jpg')
-  image.clip_and_print_best_face('output/to/somebodys-face.jpg')
+    require 'yearbook'
+    
+    image = Yearbook::Image.new('path/to/somebody.jpg')
+    image.clip_and_print_best_face('output/to/somebodys-face.jpg')
 
 ### Command-line tool
 
-  yearbook face george-washington.jpg
-  # will print out to "george-washington-face.jpg" by default
+    yearbook face george-washington.jpg
+    # will print out to "george-washington-face.jpg" by default
 
