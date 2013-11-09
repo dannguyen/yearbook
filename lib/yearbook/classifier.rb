@@ -1,3 +1,5 @@
+require 'active_support/core_ext/string'
+
 module Yearbook
   class Classifier
     
@@ -23,8 +25,11 @@ module Yearbook
 
 
     # convenience
+    # will also pluralize anything
     def self.of(object_type)
-      self.new DATA_FILES[object_type.to_sym]
+      object_name = object_type.to_s.pluralize.to_sym
+
+      return self.new DATA_FILES[object_name]
     end
 
 

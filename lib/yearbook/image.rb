@@ -5,39 +5,67 @@ require_relative 'detector'
 module Yearbook
   class Image
 
-    attr_reader :filename
+    attr_reader :filename, :clips
     def initialize(fname)
-      @filename = fname
-      @objects = []
+      @filename = fname      
     end
+
 
 
     # args is empty for now...
-    def detect_objects(obj_type, *args)
-      @objects = detect_and_collect(cv_image, obj_type)
+    def clip(obj_type, *args, &blk)
+      @clips = detect_and_collect(cv_image, obj_type)
     end
 
-    def detected_objects; @objects; end
 
 
+
+    def clipped?; @clips.count > 0; end
+
+    # just the original image
     def print(fname, &blk)
-      write_objects(fname, &blk)
+      write_images(magick_image, fname, &blk)
+    end
+
+    # print all the clips
+    def print_clips(fname, &blk)
+      write_images(constitute_clips, fname, &blk)
+    end
+
+    def print_best_clip(fname, &blk)
+      write_images(constitute_best_clip, fname, &blk)
+    end
+
+    # convenience method
+    def clip_and_print(obj_type, filename, *args, &blk)
+      clip(obj_type, *args, &blk)
+
+      print_clips(filename)
+    end
+
+    # convenience method
+    def clip_and_print_best(obj_type, filename, *args, &blk)
+      clip(obj_type, *args, &blk)
+
+      print_best_clip(filename)
     end
 
 
+    ### META STUFF
 
+    CLIPPER_REGEX = /^(clip_and_print(?:_best)?|clip)_(\w+)$/
     def method_missing(foo, *args, &blk)
       f = foo.to_s
-      # e.g. detect faces
-      if f =~ /^detect_(\w+)/
-        self.detect_objects(($1).to_sym, &blk)
+      # e.g. clip_faces
+      if f =~ CLIPPER_REGEX
+        self.send $1, $2, *args, &blk
       else
         super
       end
     end
 
     def respond_to?(foo, include_private=false)
-      return foo.to_s =~ /^detect_(\w+)/ ? true : super(foo, include_private)
+      return foo.to_s =~ CLIPPER_REGEX ? true : super(foo, include_private)
     end
 
 
@@ -45,8 +73,26 @@ module Yearbook
 
     private
 
-    def constitute_from_cv(c, img)
-      Manipulator.constitute(img, c.x, c.y, c.width, c.height)
+    def best_clip
+      @clips.best
+    end
+
+    def constitute_from_cv(cv, img)
+      Manipulator.constitute(img, cv.x, cv.y, cv.width, cv.height)
+    end
+
+    def constitute(objects)
+      objs = Array(objects)
+      objs.map{|o| constitute_from_cv(o, magick_image)}
+    end
+
+    # just a helper
+    def constitute_clips
+      constitute(@clips)
+    end
+
+    def constitute_best_clip
+      constitute(best_clip)
     end
 
     def cv_image
@@ -79,19 +125,14 @@ module Yearbook
       return transformed_obj
     end
 
-    def write_objects(base_out_fname, &blk)
-      if @objects.empty?        
-        # i.e. just writing from a regular ol magick file
-        magick_objects = Array(magick_image)
-      else
-        # converting CvRect coordinates and splitting the Magick file
-        magick_objects = @objects.map{|o| constitute_from_cv(o, magick_image)}
-      end
+    def write_images(magick_objects, base_out_fname, &blk)    
 
-      magick_objects.each_with_index do |obj, idx|
-        # generate a numbered filename if there are more than one
+      arr = Array(magick_objects)
+
+      arr.each_with_index do |obj, idx|
         output_img = transform_image(obj, &blk)
-        output_fname = idx == 0 ? base_out_fname : base_out_fname.sub(/\.(?=\w+$)/, "-#{idx}.")
+        # generate a numbered filename if there are more than one
+        output_fname = arr.count == 1 ? base_out_fname : base_out_fname.sub(/\.(?=\w+$)/, "-#{idx}.")
 
         write_image(output_img, output_fname)
       end

@@ -1,4 +1,5 @@
 require_relative 'classifier'
+require_relative 'detection'
 
 module Yearbook
   module Detector
@@ -8,15 +9,13 @@ module Yearbook
       def detect_objects(cv_image, object_type)
         x = Classifier.of(object_type).detect_objects(cv_image)
 
-        return Array(x)
-      end
 
+        return Yearbook.DetectionCollection(x, object_type)
+      end
 
       def load_cv(fname)
         IplImage::load(fname)
       end
-      
-
     end
   end
 end
