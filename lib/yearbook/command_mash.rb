@@ -1,7 +1,7 @@
 require 'delegate'
 require 'hashie'
 
-class AttHash < SimpleDelegator
+class CommandMash < SimpleDelegator
   def initialize
     @hsh = {}
     super(@hsh)

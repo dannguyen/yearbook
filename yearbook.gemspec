@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
     "data/classifiers/shameem_haarcascade_eye.xml",
     "go.rb",
     "lib/yearbook.rb",
-    "lib/yearbook/att_hash.rb",
+    "lib/yearbook/command_hash.rb",
     "lib/yearbook/classifier.rb",
     "lib/yearbook/cli.rb",
     "lib/yearbook/detected_object.rb",
