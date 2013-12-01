@@ -6,6 +6,8 @@ A very thin wrapper around [ruby-opencv](https://github.com/ruby-opencv/ruby-ope
 
 This is in very-early stage...I'm using it mostly as a quickie image cropper for various projects, as well as a way to learn the cool [thor](https://github.com/erikhuda/thor) gem.
 
+Has a few issues with painting-type images.
+
 ## Installation
 
 Load all the dependencies mentioned above (ha!)
